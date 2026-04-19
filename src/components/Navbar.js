@@ -157,23 +157,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-                  borderRadius: '20px', 
-                  cursor: 'pointer', 
-                  fontWeight: 'bold',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseOver={(e) => { e.target.style.background = 'var(--accent)'; e.target.style.color = 'white'; }}
-                onMouseOut={(e) => { e.target.style.background = 'transparent'; e.target.style.color = 'var(--accent)'; }}
-              >
-                LOGOUT
-              </button>
-            </li>
-          )}
-          
-        </ul>
-      </nav>
-    </header>
-  );
-};
-
-export default Navbar;
