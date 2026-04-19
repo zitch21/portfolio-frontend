@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import API from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 
-const CommentSection = ({ postId }) => {
+const CommentSection = ({ postId, postAuthor }) => {
   const [comments, setComments] = useState([]);
   const [text, setText] = useState('');
   const { user } = useAuth();
@@ -58,7 +58,12 @@ const CommentSection = ({ postId }) => {
             {/* Comment Content */}
             <div style={{ background: 'var(--bg)', padding: '0.8rem 1rem', borderRadius: '0 12px 12px 12px', border: '1px solid var(--muted)', width: '100%' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                <strong style={{ fontSize: '0.9rem', color: 'var(--accent)' }}>{comment.author?.name}</strong>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <strong style={{ fontSize: '0.9rem', color: 'var(--accent)' }}>{comment.author?.name}</strong>
+                  {comment.author?._id === postAuthor && (
+                    <span style={{ backgroundColor: '#fbbf24', color: '#000', fontSize: '0.7rem', fontWeight: 'bold', padding: '2px 6px', borderRadius: '12px', marginLeft: '8px' }}>Author</span>
+                  )}
+                </div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{new Date(comment.createdAt).toLocaleDateString()}</span>
               </div>
               <p style={{ margin: 0, fontSize: '0.95rem' }}>{comment.text}</p>

@@ -114,11 +114,11 @@ const HomePage = () => {
       <FadeInSection>
         <section className="container">
           <h2>Portfolio Highlights</h2>
-          <p className="center-text">Here is a quick overview of what you will find in this portfolio:</p>
+          <p className="center-text">A showcase of my growing skills in full-stack development:</p>
           <ul>
-            <li><strong>Interactive Contact Form:</strong> A fully functional contact page with client-side validation.</li>
-            <li><strong>Modern Responsive Design:</strong> Clean layout using Google Fonts, CSS Grid, and mobile-friendly styles.</li>
-            <li><strong>Location Map Embed:</strong> Google Maps integration to display my academic location.</li>
+            <li><strong>Full-Stack MERN Applications:</strong> Building end-to-end web apps with MongoDB, Express, React, and Node.js, including user authentication and real-time features.</li>
+            <li><strong>Responsive UI/UX Design:</strong> Crafting mobile-first interfaces with modern CSS techniques and component-based architecture.</li>
+            <li><strong>API Integration & Cloud Services:</strong> Connecting frontends to backends, handling data storage, and integrating third-party services like Cloudinary for media.</li>
           </ul>
         </section>
       </FadeInSection>
@@ -214,7 +214,7 @@ const HomePage = () => {
                     {/* ⬅️ NEW: Conditionally rendering the Comment Section */}
                     {expandedComments[post._id] && (
                       <div style={{ marginTop: '1.5rem' }}>
-                        <CommentSection postId={post._id} />
+                        <CommentSection postId={post._id} postAuthor={post.author._id} />
                       </div>
                     )}
 
