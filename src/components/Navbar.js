@@ -1,5 +1,4 @@
 // src/components/Navbar.js
-import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext'; // ⬅️ NEW: Import useTheme
@@ -9,7 +8,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { themeMode, themeAccent, toggleThemeMode, setAccentColor } = useTheme(); // ⬅️ NEW: Use theme context
-  const [showAccentPicker, setShowAccentPicker] = useState(false);
 
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
