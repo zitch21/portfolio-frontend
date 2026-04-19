@@ -7,6 +7,7 @@ const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
   const [messages, setMessages] = useState([]); // ⬅️ NEW: State to hold contact messages
+  const [stats, setStats] = useState({ totalUsers: 0 }); // ⬅️ NEW: State for statistics
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,14 +17,16 @@ const AdminPage = () => {
   const fetchDashboardData = async () => {
     try {
       // ⬅️ NEW: Fetch all three datasets at the exact same time
-      const [usersRes, postsRes, messagesRes] = await Promise.all([
+      const [usersRes, postsRes, messagesRes, statsRes] = await Promise.all([
         API.get('/admin/users'),
         API.get('/posts'),
-        API.get('/admin/messages') 
+        API.get('/admin/messages'),
+        API.get('/admin/stats') // ⬅️ NEW: Fetch statistics
       ]);
       setUsers(usersRes.data);
       setPosts(postsRes.data);
       setMessages(messagesRes.data);
+      setStats(statsRes.data); // ⬅️ NEW: Set statistics
     } catch (err) {
       alert('Failed to load admin data. Are you sure you are logged in as admin?');
     } finally {
@@ -69,6 +72,17 @@ const AdminPage = () => {
     <main className="container" style={{ marginTop: '2rem' }}>
       <h2>Admin Dashboard</h2>
       <p>Welcome to the control center. Please moderate responsibly.</p>
+
+      {/* ─── ADMIN STATISTICS ─── */}
+      <div style={{ marginTop: '2rem', marginBottom: '2rem', padding: '1.5rem', background: 'linear-gradient(135deg, #000 0%, #333 100%)', color: '#fbbf24', borderRadius: '12px', border: '2px solid #fbbf24', boxShadow: '0 4px 12px rgba(251, 191, 36, 0.3)' }}>
+        <h3 style={{ margin: '0 0 1rem 0', color: '#fbbf24' }}>Platform Statistics</h3>
+        <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#fbbf24' }}>{stats.totalUsers}</div>
+            <div style={{ fontSize: '0.9rem', color: '#ccc' }}>Total Registered Users</div>
+          </div>
+        </div>
+      </div>
 
       {/* ─── DASHBOARD TABS ─── */}
       <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem', borderBottom: '2px solid var(--muted)', paddingBottom: '1rem', flexWrap: 'wrap' }}>

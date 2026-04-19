@@ -65,7 +65,11 @@ const ProfilePage = () => {
       alert("Profile picture updated successfully!");
     } catch (err) {
       console.error(err);
-      alert("Failed to upload photo. Check backend console.");
+      if (err.response?.status === 429) {
+        alert("You can only change your profile picture once a day.");
+      } else {
+        alert("Failed to upload photo. Check backend console.");
+      }
     } finally {
       setUploading(false);
     }

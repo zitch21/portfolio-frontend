@@ -12,20 +12,24 @@ const AboutPage = () => {
 
         <div style={{ display: 'grid', gap: '1.5rem', marginTop: '2rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
           <div style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--muted)' }}>
-            <h3>Interactive Particle Background</h3>
-            <p style={{ color: 'var(--muted)' }}>A dynamic animated hero section adds motion and energy to the landing experience without sacrificing speed or clarity.</p>
+            <h3>AI "Magic Polish"</h3>
+            <p style={{ color: 'var(--muted)' }}>Powered by Gemini 1.5 Flash for one-click post enhancement.</p>
           </div>
           <div style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--muted)' }}>
-            <h3>Reactions & Comments Engine</h3>
-            <p style={{ color: 'var(--muted)' }}>Users can like posts, share reactions, and leave comments in a fluid social feed that encourages engagement.</p>
+            <h3>Production-Grade Architecture</h3>
+            <p style={{ color: 'var(--muted)' }}>Deployed on Vercel and Render with MongoDB Atlas and Cloudinary media hosting.</p>
           </div>
           <div style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--muted)' }}>
-            <h3>Secure OTP Authentication</h3>
-            <p style={{ color: 'var(--muted)' }}>The sign-in system uses OTP security to protect accounts and build trust for every user.</p>
+            <h3>Advanced Authentication</h3>
+            <p style={{ color: 'var(--muted)' }}>Secure JWT sessions with OTP email verification.</p>
           </div>
           <div style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--muted)' }}>
-            <h3>Magic Polish Writing Assistant</h3>
-            <p style={{ color: 'var(--muted)' }}>A custom AI feature helps users refine their writing instantly, making post creation faster and more polished.</p>
+            <h3>Admin Moderation & Logic</h3>
+            <p style={{ color: 'var(--muted)' }}>Custom role-based access control, live user statistics, and profile picture rate-limiting.</p>
+          </div>
+          <div style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--muted)' }}>
+            <h3>Dynamic UI</h3>
+            <p style={{ color: 'var(--muted)' }}>Real-time timestamps and interactive particle backgrounds.</p>
           </div>
         </div>
       </section>
@@ -61,12 +65,14 @@ const AboutPage = () => {
         <div className="mt-2">
           <h3>My Journey (Timeline)</h3>
           <p>My path to becoming a Computer Science student:</p>
-          <ol>
-            <li><strong>2017:</strong> Graduated Elementary School.</li>
-            <li><strong>2023:</strong> I started taking interest about computers. Then I Graduated High School as an ICT student.</li>
-            <li><strong>2023:</strong> Enrolled in BS Computer Science at University.</li>
-            <li><strong>2026:</strong> Creating my first Web Portfolio.</li>
-          </ol>
+          <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'left' }}>
+            <ol>
+              <li><strong>2017:</strong> Graduated Elementary School.</li>
+              <li><strong>2023:</strong> I started taking interest about computers. Then I Graduated High School as an ICT student.</li>
+              <li><strong>2023:</strong> Enrolled in BS Computer Science at University.</li>
+              <li><strong>2026:</strong> Creating my first Web Portfolio.</li>
+            </ol>
+          </div>
         </div>
 
         <div className="mt-2">
