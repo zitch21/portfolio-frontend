@@ -94,8 +94,8 @@ const HomePage = () => {
       <section className="hero container">
         <div className="hero-left">
           <h1>{typedText}<span className="cursor">|</span></h1>
-          <p>BS Computer Science student at DMMMSU. Learning to build clean and functional websites.</p>
-          <p>I am currently focusing on mastering HTML5 structure and CSS styling. This portfolio serves as a documentation of my progress, displaying the projects I've built as I learn web development fundamentals.</p>
+          <p>Crafting polished, modern web experiences with a thoughtful blend of design, interaction, and engineering.</p>
+          <p>Discover responsive projects, dynamic community posts, and powerful tools built to showcase real full-stack development skills.</p>
           <br />
           <Link to="/about"><button>Learn More About Me</button></Link>
           {!user && <Link to="/register"><button className="mr-1">Sign Up Now</button></Link>}

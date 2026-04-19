@@ -12,24 +12,34 @@ const RegisterPage = () => {
   });
 
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
   const [showSuccess, setShowSuccess] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(''); // Clear errors when typing
+    setError('');
+    setFieldErrors(prev => ({ ...prev, [e.target.name]: '' }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // 1. Basic Validation
-    if (formData.password !== formData.confirmPassword) {
-      return setError('Passwords do not match!');
+    setError('');
+
+    const validation = {};
+    if (!formData.name.trim()) validation.name = 'Name is required!';
+    if (!formData.email.trim()) validation.email = 'Email is required!';
+    if (!formData.password) validation.password = 'Password is required!';
+    if (!formData.confirmPassword) validation.confirmPassword = 'Confirm password is required!';
+    if (formData.password && formData.password.length < 6) validation.password = 'Password must be at least 6 characters.';
+    if (formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword) validation.confirmPassword = 'Passwords do not match!';
+
+    if (Object.keys(validation).length) {
+      setFieldErrors(validation);
+      return;
     }
-    if (formData.password.length < 6) {
-      return setError('Password must be at least 6 characters.');
-    }
+
+    setFieldErrors({});
 
     try {
       // 2. Send the data to your Express backend!
@@ -73,22 +83,26 @@ const RegisterPage = () => {
 
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
-            <input id="name" type="text" name="name" value={formData.name} onChange={handleChange} required />
+            <input id="name" type="text" name="name" value={formData.name} onChange={handleChange} />
+            {fieldErrors.name && <p style={{ color: '#dc2626', marginTop: '0.5rem', fontSize: '0.9rem' }}>{fieldErrors.name}</p>}
           </div>
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
-            <input id="email" type="email" name="email" value={formData.email} onChange={handleChange} required />
+            <input id="email" type="email" name="email" value={formData.email} onChange={handleChange} />
+            {fieldErrors.email && <p style={{ color: '#dc2626', marginTop: '0.5rem', fontSize: '0.9rem' }}>{fieldErrors.email}</p>}
           </div>
 
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input id="password" type="password" name="password" value={formData.password} onChange={handleChange} required />
+            <input id="password" type="password" name="password" value={formData.password} onChange={handleChange} />
+            {fieldErrors.password && <p style={{ color: '#dc2626', marginTop: '0.5rem', fontSize: '0.9rem' }}>{fieldErrors.password}</p>}
           </div>
 
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password</label>
-            <input id="confirmPassword" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required />
+            <input id="confirmPassword" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
+            {fieldErrors.confirmPassword && <p style={{ color: '#dc2626', marginTop: '0.5rem', fontSize: '0.9rem' }}>{fieldErrors.confirmPassword}</p>}
           </div>
 
           <button type="submit" className="btn" style={{ width: '100%', marginTop: '1rem' }} disabled={showSuccess}>

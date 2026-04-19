@@ -7,15 +7,27 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); 
+    setError('');
+    const validation = {};
+
+    if (!email.trim()) validation.email = 'Email is required!';
+    if (!password) validation.password = 'Password is required!';
+
+    if (Object.keys(validation).length) {
+      setFieldErrors(validation);
+      return;
+    }
+
+    setFieldErrors({});
     try {
       await login(email, password);
-      navigate('/home'); 
+      navigate('/home');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to log in. Please try again.');
     }
@@ -41,9 +53,12 @@ const LoginPage = () => {
               id="email" 
               type="email" 
               value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              required 
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setFieldErrors(prev => ({ ...prev, email: '' }));
+              }} 
             />
+            {fieldErrors.email && <p style={{ color: '#dc2626', marginTop: '0.5rem', fontSize: '0.9rem' }}>{fieldErrors.email}</p>}
           </div>
 
           <div className="form-group">
@@ -52,9 +67,12 @@ const LoginPage = () => {
               id="password" 
               type="password" 
               value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              required 
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setFieldErrors(prev => ({ ...prev, password: '' }));
+              }} 
             />
+            {fieldErrors.password && <p style={{ color: '#dc2626', marginTop: '0.5rem', fontSize: '0.9rem' }}>{fieldErrors.password}</p>}
           </div>
 
           <button type="submit" className="btn" style={{ width: '100%', marginTop: '1rem' }}>Log In</button>
