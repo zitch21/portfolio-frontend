@@ -37,6 +37,7 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [expandedComments, setExpandedComments] = useState({}); // ⬅️ NEW: Tracks hidden/shown comments
   const { user } = useAuth();
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
   const fullText = "HI THERE! I'M A STUDENT WEB DEVELOPER.";
 
   // Typewriter Effect
@@ -157,7 +158,7 @@ const HomePage = () => {
                     {/* Image Render (If one exists) */}
                     {post.coverImage && (
                       <img 
-                        src={`http://localhost:5000/uploads/${post.coverImage}`} 
+                        src={`${BACKEND_URL}/uploads/${post.coverImage}`} 
                         alt="Post cover" 
                         loading="lazy" 
                         style={{ 

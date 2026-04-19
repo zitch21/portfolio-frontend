@@ -1,5 +1,5 @@
 // src/pages/PublicProfile.js
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import API from '../api/axios';
 import { useAuth } from '../context/AuthContext';
@@ -12,12 +12,9 @@ const PublicProfile = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
 
-  useEffect(() => {
-    fetchProfile();
-  }, [id]);
-
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     try {
       const { data } = await API.get(`/users/${id}`);
       setProfileData(data.user);
@@ -33,7 +30,11 @@ const PublicProfile = () => {
       console.error("Error fetching profile:", err);
       setLoading(false);
     }
-  };
+  }, [id, currentUser]);
+
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
 
   const handleFollowToggle = async () => {
     if (!currentUser) return alert("You must be logged in to follow users.");
@@ -65,7 +66,7 @@ const PublicProfile = () => {
         
         <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--accent)', margin: '0 auto 1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 'bold', color: '#000', overflow: 'hidden' }}>
           {profileData.profilePic ? (
-             <img src={`http://localhost:5000/uploads/${profileData.profilePic}`} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+             <img src={`${BACKEND_URL}/uploads/${profileData.profilePic}`} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : (
              profileData.name.charAt(0).toUpperCase()
           )}
@@ -122,7 +123,7 @@ const PublicProfile = () => {
               
               {post.coverImage && (
                 <img
-                    src={`http://localhost:5000/uploads/${post.coverImage}`} 
+                    src={`${BACKEND_URL}/uploads/${post.coverImage}`} 
                     alt="Post cover" 
                     loading="lazy" 
                     style={{ 

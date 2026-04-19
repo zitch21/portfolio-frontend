@@ -7,6 +7,7 @@ const CommentSection = ({ postId }) => {
   const [comments, setComments] = useState([]);
   const [text, setText] = useState('');
   const { user } = useAuth();
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
 
   // Fetch comments when the component loads
   useEffect(() => {
@@ -49,7 +50,7 @@ const CommentSection = ({ postId }) => {
             {/* Commenter's Profile Picture */}
             <div style={{ width: '35px', height: '35px', borderRadius: '50%', background: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', flexShrink: 0, overflow: 'hidden' }}>
               {comment.author?.profilePic ? (
-                <img src={`http://localhost:5000/uploads/${comment.author.profilePic}`} alt="pic" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={`${BACKEND_URL}/uploads/${comment.author.profilePic}`} alt="pic" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
                 comment.author?.name?.charAt(0) || 'U'
               )}
