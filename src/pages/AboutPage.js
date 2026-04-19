@@ -1,0 +1,54 @@
+// src/pages/AboutPage.js
+import DebugDefender from '../components/DebugDefender';
+
+const AboutPage = () => {
+  return (
+    <main className="container">
+      <h2>About Me & My Topic</h2>
+      
+      <div className="two-column">
+        <div className="flex-1">
+          <h3>What I Love About Programming</h3>
+          <p>I chose this field because I am curious about how the internet works. Right now, I am in the learning phase-figuring out how to position elements on a page and make them look good.</p>
+          <p>It can be challenging when the code doesn't work as expected, but I enjoy the feeling of finally fixing an error and seeing the webpage display correctly.</p>
+          <p>My goal is to keep practicing until I can build complex websites from scratch, Hahahahaha:{'>'}</p>
+          <blockquote>
+            "Programming isn't about what you know; it's about what you can figure out." - Chris Pine
+          </blockquote>
+        </div>
+        <div className="flex-1">
+          <img src="/assets/project.jpg" alt="Developer working on a laptop" />
+        </div>
+      </div>
+
+      <div className="mt-2">
+        <h3>Mini-Project: Debug Defender</h3>
+        <p className="center-text">I built this bullet-hell style game using HTML5 Canvas and JavaScript to practice game logic. <br/><strong>How to play:</strong> Click to shoot, WASD to move.</p>
+        
+        {/* We abstract the massive game logic into its own reusable component */}
+        <DebugDefender />
+        
+      </div>
+
+      <hr className="divider" />
+
+      <h3>My Journey (Timeline)</h3>
+      <p>My path to becoming a Computer Science student:</p>
+      <ol>
+        <li><strong>2017:</strong> Graduated Elementary School.</li>
+        <li><strong>2023:</strong> I started taking interest about computers. Then I Graduated High School as an ICT student.</li>
+        <li><strong>2023:</strong> Enrolled in BS Computer Science at University.</li>
+        <li><strong>2026:</strong> Creating my first Web Portfolio.</li>
+      </ol>
+
+      <div className="mt-2">
+        <img src="/assets/codingproject.jpg" alt="Screenshot of HTML/CSS code and layout" className="img-cover" />
+      </div>
+      <h3>How I Learn</h3>
+      <p>I learn by following tutorials, reading class materials, and trying to replicate simple website layouts. I use resources like W3Schools to look up tags I don't remember.</p>
+      <p>I treat every error as a lesson, and I try to organize my code better with every new assignment.</p>
+    </main>
+  );
+};
+
+export default AboutPage;
