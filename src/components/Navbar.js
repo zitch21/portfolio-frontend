@@ -1,4 +1,5 @@
 // src/components/Navbar.js
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext'; // ⬅️ NEW: Import useTheme
@@ -8,6 +9,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { themeMode, themeAccent, toggleThemeMode, setAccentColor } = useTheme(); // ⬅️ NEW: Use theme context
+  const [showAccentPicker, setShowAccentPicker] = useState(false);
 
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
@@ -60,39 +62,81 @@ const Navbar = () => {
             </button>
           </li>
 
-          {/* ─── ACCENT COLOR PICKER ─── */}
+          {/* ─── PAINT PALETTE DROPDOWN ─── */}
           <li style={{ position: 'relative' }}>
-            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-              {accentColors.map(color => (
-                <button
-                  key={color}
-                  onClick={() => setAccentColor(color)}
-                  style={{
-                    width: '24px',
-                    height: '24px',
-                    borderRadius: '50%',
-                    border: themeAccent === color ? '3px solid var(--text-main)' : '2px solid var(--text-muted)',
-                    background: accentColorMap[color],
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                    boxShadow: themeAccent === color ? '0 0 8px rgba(0,0,0,0.3)' : 'none'
-                  }}
-                  onMouseOver={(e) => {
-                    if (themeAccent !== color) {
-                      e.currentTarget.style.transform = 'scale(1.15)';
-                      e.currentTarget.style.boxShadow = '0 0 12px rgba(0,0,0,0.3)';
-                    }
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    if (themeAccent !== color) {
-                      e.currentTarget.style.boxShadow = 'none';
-                    }
-                  }}
-                  title={`Set ${color} accent`}
-                />
-              ))}
-            </div>
+            <button 
+              onClick={() => setShowAccentPicker(!showAccentPicker)}
+              style={{ 
+                background: 'var(--bg-secondary)', 
+                border: '1px solid var(--text-muted)', 
+                color: 'var(--text-main)', 
+                cursor: 'pointer', 
+                fontSize: '0.9rem', 
+                padding: '6px 14px', 
+                borderRadius: '20px', 
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontWeight: 'bold',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.borderColor = 'var(--color-accent)'}
+              onMouseOut={(e) => e.currentTarget.style.borderColor = 'var(--text-muted)'}
+              title="Choose accent color"
+            >
+              🎨
+            </button>
+            {showAccentPicker && (
+              <div style={{
+                position: 'absolute',
+                top: '100%',
+                right: '0',
+                marginTop: '8px',
+                background: 'var(--bg-secondary)',
+                border: '1px solid var(--text-muted)',
+                borderRadius: '12px',
+                padding: '12px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                zIndex: 1000,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gap: '8px',
+                minWidth: '120px'
+              }}>
+                {accentColors.map(color => (
+                  <button
+                    key={color}
+                    onClick={() => {
+                      setAccentColor(color);
+                      setShowAccentPicker(false);
+                    }}
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      borderRadius: '50%',
+                      border: themeAccent === color ? '3px solid var(--text-main)' : '2px solid var(--text-muted)',
+                      background: accentColorMap[color],
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      boxShadow: themeAccent === color ? '0 0 8px rgba(0,0,0,0.3)' : 'none'
+                    }}
+                    onMouseOver={(e) => {
+                      if (themeAccent !== color) {
+                        e.currentTarget.style.transform = 'scale(1.15)';
+                        e.currentTarget.style.boxShadow = '0 0 12px rgba(0,0,0,0.3)';
+                      }
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      if (themeAccent !== color) {
+                        e.currentTarget.style.boxShadow = 'none';
+                      }
+                    }}
+                    title={`Set ${color} accent`}
+                  />
+                ))}
+              </div>
+            )}
           </li>
           
           {/* Always visible links */}
