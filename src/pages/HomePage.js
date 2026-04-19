@@ -6,6 +6,20 @@ import { useAuth } from '../context/AuthContext';
 import SearchBar from '../components/SearchBar';
 import CommentSection from '../components/CommentSection';
 
+// ─── HELPER FUNCTION FOR TIME AGO ───
+const timeAgo = (date) => {
+  const now = new Date();
+  const diff = now - new Date(date);
+  const seconds = Math.floor(diff / 1000);
+  if (seconds < 60) return 'Just now';
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  const days = Math.floor(hours / 24);
+  return `${days} day${days > 1 ? 's' : ''} ago`;
+};
+
 // ─── REUSABLE SCROLL REVEAL COMPONENT ───
 const FadeInSection = ({ children }) => {
   const [isVisible, setVisible] = useState(false);
@@ -148,7 +162,7 @@ const HomePage = () => {
                     
                     {/* Post Author & Date (⬅️ NEW: Link wrapped around author name) */}
                     <p style={{ fontSize: '0.9rem', color: 'var(--muted)', marginTop: '0.5rem' }}>
-                      Posted by <Link to={`/profile/${post.author?._id}`} style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 'bold' }}>{post.author?.name || 'Unknown'}</Link> on {new Date(post.createdAt).toLocaleDateString()}
+                      Posted by <Link to={`/profile/${post.author?._id}`} style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 'bold' }}>{post.author?.name || 'Unknown'}</Link> on {timeAgo(post.createdAt)}
                     </p>
                     
                     {/* Post Content */}

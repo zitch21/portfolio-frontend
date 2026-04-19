@@ -122,7 +122,7 @@ const CreatePost = () => {
                   boxShadow: '0 2px 10px rgba(245, 158, 11, 0.3)'
                 }}
               >
-                {isPolishing ? '✨ Polishing...' : '✨ Magic Polish'}
+                {isPolishing ? '✨ Polishing... Please wait (this may take a few seconds).' : '✨ Magic Polish'}
               </button>
             </div>
 

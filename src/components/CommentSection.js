@@ -3,6 +3,20 @@ import { useState, useEffect } from 'react';
 import API from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 
+// ─── HELPER FUNCTION FOR TIME AGO ───
+const timeAgo = (date) => {
+  const now = new Date();
+  const diff = now - new Date(date);
+  const seconds = Math.floor(diff / 1000);
+  if (seconds < 60) return 'Just now';
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  const days = Math.floor(hours / 24);
+  return `${days} day${days > 1 ? 's' : ''} ago`;
+};
+
 const CommentSection = ({ postId, postAuthor }) => {
   const [comments, setComments] = useState([]);
   const [text, setText] = useState('');
@@ -64,7 +78,7 @@ const CommentSection = ({ postId, postAuthor }) => {
                     <span style={{ backgroundColor: '#fbbf24', color: '#000', fontSize: '0.7rem', fontWeight: 'bold', padding: '2px 6px', borderRadius: '12px', marginLeft: '8px' }}>Author</span>
                   )}
                 </div>
-                <span style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{new Date(comment.createdAt).toLocaleDateString()}</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{timeAgo(comment.createdAt)}</span>
               </div>
               <p style={{ margin: 0, fontSize: '0.95rem' }}>{comment.text}</p>
             </div>
