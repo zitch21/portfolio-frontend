@@ -16,7 +16,7 @@
   --text-muted: #94a3b8;
   --color-accent: #2563eb;
   --color-accent-hover: #1d4ed8;
-  --accent-gradient: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+  --accent-gradient: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
 }
 
 /* ─── LIGHT MODE ─── */
@@ -185,7 +185,7 @@ img {
   top: 0;
   background: var(--bg-secondary);
   backdrop-filter: blur(6px);
-  border-bottom: '1px solid var(--text-muted)';
+  border-bottom: 1px solid rgba(100, 116, 139, 0.16);
   z-index: 100;
 }
 .nav {
@@ -209,13 +209,13 @@ img {
   transition: color 0.15s;
 }
 .nav-link:hover {
-  color: #fff;
+  color: var(--color-accent-hover);
 }
 .nav-link.active {
-  color: #fff;
+  color: var(--color-accent);
   font-weight: 700;
   border-bottom: none;
-  box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
   /* Footer */
