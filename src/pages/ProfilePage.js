@@ -9,7 +9,6 @@ const ProfilePage = () => {
   const [stats, setStats] = useState({ followers: 0, following: 0 }); // Fresh stats state
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -96,7 +95,7 @@ const ProfilePage = () => {
         {/* Profile Picture Area */}
         <div style={{ position: 'relative', width: '120px', height: '120px' }}>
           {user.profilePic ? (
-            <img src={`${BACKEND_URL}/uploads/${user.profilePic}`} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--accent)' }} />
+            <img src={user.profilePic} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--accent)' }} />
           ) : (
             <div style={{ width: '100%', height: '100%', borderRadius: '50%', background: 'var(--accent)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', fontWeight: 'bold' }}>
               {user.name.charAt(0).toUpperCase()}
@@ -169,7 +168,7 @@ const ProfilePage = () => {
 
               {post.coverImage && (
                 <img 
-                    src={`${BACKEND_URL}/uploads/${post.coverImage}`} 
+                    src={post.coverImage} 
                     alt="Post cover" 
                     loading="lazy" 
                     style={{ 

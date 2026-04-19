@@ -7,7 +7,6 @@ const SearchBar = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
 
   useEffect(() => {
     if (query.trim() === '') {
@@ -84,7 +83,7 @@ const SearchBar = () => {
             >
               <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'var(--accent)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', overflow: 'hidden' }}>
                 {user.profilePic ? (
-                  <img src={`${BACKEND_URL}/uploads/${user.profilePic}`} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={user.profilePic} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
                   user.name.charAt(0).toUpperCase()
                 )}

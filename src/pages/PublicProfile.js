@@ -12,7 +12,6 @@ const PublicProfile = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(true);
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
 
   const fetchProfile = useCallback(async () => {
     try {
@@ -66,7 +65,7 @@ const PublicProfile = () => {
         
         <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--accent)', margin: '0 auto 1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 'bold', color: '#000', overflow: 'hidden' }}>
           {profileData.profilePic ? (
-             <img src={`${BACKEND_URL}/uploads/${profileData.profilePic}`} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+             <img src={profileData.profilePic} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : (
              profileData.name.charAt(0).toUpperCase()
           )}
@@ -123,7 +122,7 @@ const PublicProfile = () => {
               
               {post.coverImage && (
                 <img
-                    src={`${BACKEND_URL}/uploads/${post.coverImage}`} 
+                    src={post.coverImage}
                     alt="Post cover" 
                     loading="lazy" 
                     style={{ 
