@@ -2,8 +2,8 @@
 
 A production-ready, full-stack web application built to showcase modern development skills. This platform goes beyond a static portfolio by integrating a fully functional social feed, secure authentication, role-based access control, and AI-powered content generation.
 
-**Live Frontend (Vercel):** [Insert Your Vercel Link Here]
-**Live Backend (Render):** [Insert Your Render Link Here]
+**Live Frontend (Vercel):** [https://thefolio-mern-zitch-dev.vercel.app/]
+**Live Backend (Render):** [https://zitchportfolio-backend.onrender.com]
 
 ## 🛠️ Tech Stack & Architecture
 
