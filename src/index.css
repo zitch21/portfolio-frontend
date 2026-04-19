@@ -1,21 +1,93 @@
-/* Theme variables */
+/* ─── 2D THEME SYSTEM ─── */
 :root {
-  /* Modern light theme (white + blue accent) */
-  --bg: #f8fafc; /* ultra light gray */
-  --fg: #22223b; /* deep blue-gray for text */
-  --muted: #94a3b8; /* muted blue-gray for accents/text-muted */
-  --accent: #2563eb; /* blue accent */
-  --accent-gradient: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
-  --container-padding: 1rem;
-  --max-width: 1100px;
-
   /* Standard font sizes */
   --xs: 14px;
   --sm: 18px;
   --md: 32px;
   --lg: 48px;
-
+  --container-padding: 1rem;
+  --max-width: 1100px;
   font-family: 'Poppins', sans-serif;
+
+  /* Default: Dark Mode + Blue Accent */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --accent-gradient: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+}
+
+/* ─── LIGHT MODE ─── */
+html[data-mode="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+}
+
+/* ─── DARK MODE ─── */
+html[data-mode="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+}
+
+/* ─── ACCENT COLORS (RED) ─── */
+html[data-accent="red"] {
+  --color-accent: #dc2626;
+  --color-accent-hover: #b91c1c;
+}
+
+/* ─── ACCENT COLORS (GREEN) ─── */
+html[data-accent="green"] {
+  --color-accent: #16a34a;
+  --color-accent-hover: #15803d;
+}
+
+/* ─── ACCENT COLORS (BLUE) ─── */
+html[data-accent="blue"] {
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+}
+
+/* ─── ACCENT COLORS (PURPLE) ─── */
+html[data-accent="purple"] {
+  --color-accent: #9333ea;
+  --color-accent-hover: #7e22ce;
+}
+
+/* ─── ACCENT COLORS (YELLOW) ─── */
+html[data-accent="yellow"] {
+  --color-accent: #eab308;
+  --color-accent-hover: #ca8a04;
+}
+
+/* ─── ACCENT COLORS (ORANGE) ─── */
+html[data-accent="orange"] {
+  --color-accent: #ea580c;
+  --color-accent-hover: #c2410c;
+}
+
+/* ─── ACCENT COLORS (MONOCHROME) ─── */
+html[data-mode="dark"][data-accent="monochrome"] {
+  --color-accent: #ffffff;
+  --color-accent-hover: #e5e5e5;
+}
+
+html[data-mode="light"][data-accent="monochrome"] {
+  --color-accent: #000000;
+  --color-accent-hover: #333333;
+}
+
+/* ─── Backward Compatibility: Map old variables ─── */
+:root {
+  --bg: var(--bg-primary);
+  --fg: var(--text-main);
+  --muted: var(--text-muted);
+  --accent: var(--color-accent);
 }
 
 /* Font */

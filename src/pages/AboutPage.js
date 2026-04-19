@@ -28,8 +28,8 @@ const AboutPage = () => {
             <p style={{ color: 'var(--muted)' }}>Custom role-based access control, live user statistics, and profile picture rate-limiting.</p>
           </div>
           <div style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--muted)' }}>
-            <h3>Dynamic UI</h3>
-            <p style={{ color: 'var(--muted)' }}>Real-time timestamps and interactive particle backgrounds.</p>
+            <h3>Dynamic 2D Theme Engine</h3>
+            <p style={{ color: 'var(--muted)' }}>Seamlessly toggle between Light/Dark modes and 7 custom accent colors with persistent local storage.</p>
           </div>
         </div>
       </section>

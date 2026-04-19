@@ -1,23 +1,15 @@
 // src/components/Navbar.js
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; 
+import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext'; // ⬅️ NEW: Import useTheme
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout } = useAuth(); 
-  const [isDark, setIsDark] = useState(localStorage.getItem('darkMode') === 'enabled');
-
-  useEffect(() => {
-    if (isDark) {
-      document.body.classList.add('dark-mode');
-      localStorage.setItem('darkMode', 'enabled');
-    } else {
-      document.body.classList.remove('dark-mode');
-      localStorage.setItem('darkMode', null);
-    }
-  }, [isDark]);
+  const { user, logout } = useAuth();
+  const { themeMode, themeAccent, toggleThemeMode, setAccentColor } = useTheme(); // ⬅️ NEW: Use theme context
+  const [showAccentPicker, setShowAccentPicker] = useState(false);
 
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
@@ -27,20 +19,31 @@ const Navbar = () => {
     }
   };
 
+  const accentColors = ['red', 'green', 'blue', 'purple', 'yellow', 'orange', 'monochrome'];
+  const accentColorMap = {
+    red: '#dc2626',
+    green: '#16a34a',
+    blue: '#2563eb',
+    purple: '#9333ea',
+    yellow: '#eab308',
+    orange: '#ea580c',
+    monochrome: themeMode === 'dark' ? '#ffffff' : '#000000'
+  };
+
   return (
     <header className="site-header">
       <nav className="nav container">
         <div className="logo"><strong>EJPB</strong></div>
         <ul className="nav-right">
           
-          {/* ─── UPGRADED THEME TOGGLE BUTTON ─── */}
+          {/* ─── LIGHT/DARK MODE TOGGLE ─── */}
           <li>
             <button 
-              onClick={() => setIsDark(!isDark)} 
+              onClick={toggleThemeMode} 
               style={{ 
-                background: 'var(--bg)', 
-                border: '1px solid var(--muted)', 
-                color: 'var(--text)', 
+                background: 'var(--bg-secondary)', 
+                border: '1px solid var(--text-muted)', 
+                color: 'var(--text-main)', 
                 cursor: 'pointer', 
                 fontSize: '0.9rem', 
                 padding: '6px 14px', 
@@ -51,11 +54,47 @@ const Navbar = () => {
                 fontWeight: 'bold',
                 transition: 'all 0.3s ease'
               }}
-              onMouseOver={(e) => e.currentTarget.style.borderColor = 'var(--accent)'}
-              onMouseOut={(e) => e.currentTarget.style.borderColor = 'var(--muted)'}
+              onMouseOver={(e) => e.currentTarget.style.borderColor = 'var(--color-accent)'}
+              onMouseOut={(e) => e.currentTarget.style.borderColor = 'var(--text-muted)'}
+              title="Toggle light/dark mode"
             >
-              {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
+              {themeMode === 'dark' ? '☀️' : '🌙'}
             </button>
+          </li>
+
+          {/* ─── ACCENT COLOR PICKER ─── */}
+          <li style={{ position: 'relative' }}>
+            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+              {accentColors.map(color => (
+                <button
+                  key={color}
+                  onClick={() => setAccentColor(color)}
+                  style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    border: themeAccent === color ? '3px solid var(--text-main)' : '2px solid var(--text-muted)',
+                    background: accentColorMap[color],
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: themeAccent === color ? '0 0 8px rgba(0,0,0,0.3)' : 'none'
+                  }}
+                  onMouseOver={(e) => {
+                    if (themeAccent !== color) {
+                      e.currentTarget.style.transform = 'scale(1.15)';
+                      e.currentTarget.style.boxShadow = '0 0 12px rgba(0,0,0,0.3)';
+                    }
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    if (themeAccent !== color) {
+                      e.currentTarget.style.boxShadow = 'none';
+                    }
+                  }}
+                  title={`Set ${color} accent`}
+                />
+              ))}
+            </div>
           </li>
           
           {/* Always visible links */}
@@ -95,9 +134,29 @@ const Navbar = () => {
                 onClick={handleLogout} 
                 style={{ 
                   background: 'transparent', 
-                  color: 'var(--accent)', 
-                  border: '2px solid var(--accent)', 
+                  color: 'var(--color-accent)', 
+                  border: '2px solid var(--color-accent)', 
                   padding: '5px 15px', 
+                  borderRadius: '20px', 
+                  cursor: 'pointer', 
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseOver={(e) => { e.target.style.background = 'var(--color-accent)'; e.target.style.color = 'white'; }}
+                onMouseOut={(e) => { e.target.style.background = 'transparent'; e.target.style.color = 'var(--color-accent)'; }}
+              >
+                LOGOUT
+              </button>
+            </li>
+          )}
+          
+        </ul>
+      </nav>
+    </header>
+  );
+};
+
+export default Navbar;
                   borderRadius: '20px', 
                   cursor: 'pointer', 
                   fontWeight: 'bold',

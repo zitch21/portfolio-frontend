@@ -31,6 +31,9 @@ Integrated a custom writing assistant powered by the Gemini API. Users can draft
 ### 🛡️ Admin God Mode
 A dedicated moderation layer allowing administrators to view live platform statistics (total registered users) and actively moderate/delete content from the global feed to ensure community safety.
 
+### 🎨 Dynamic 2D Theme Engine
+A two-dimensional theme system allowing users to toggle between Light and Dark modes while selecting from 7 custom accent colors (Red, Green, Blue, Purple, Yellow, Orange, and Monochrome). Preferences are persisted in local storage for a seamless experience across sessions.
+
 ## 💻 Local Development Setup
 
 To run this project locally, you will need two terminal windows (one for the frontend, one for the backend).
