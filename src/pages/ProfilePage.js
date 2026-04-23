@@ -9,6 +9,12 @@ const ProfilePage = () => {
   const [stats, setStats] = useState({ followers: 0, following: 0 }); // Fresh stats state
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
+  const [passwordSuccess, setPasswordSuccess] = useState('');
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -85,6 +91,41 @@ const ProfilePage = () => {
     }
   };
 
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    setPasswordError('');
+    setPasswordSuccess('');
+
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      return setPasswordError('Please complete all password fields.');
+    }
+
+    if (newPassword.length < 6) {
+      return setPasswordError('New password must be at least 6 characters long.');
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      return setPasswordError('New passwords do not match.');
+    }
+
+    setPasswordLoading(true);
+    try {
+      const { data } = await API.put('/users/change-password', {
+        currentPassword,
+        newPassword
+      });
+
+      setPasswordSuccess(data.message || 'Password updated successfully.');
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmNewPassword('');
+    } catch (err) {
+      setPasswordError(err.response?.data?.message || 'Failed to update password.');
+    } finally {
+      setPasswordLoading(false);
+    }
+  };
+
   if (!user) return null;
 
   // Calculate Popularity dynamically
@@ -140,6 +181,76 @@ const ProfilePage = () => {
 
           </div>
         </div>
+      </div>
+
+      <div style={{ background: 'var(--bg)', padding: '1.75rem', borderRadius: '12px', border: '1px solid var(--muted)', marginTop: '2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap' }}>
+          <div>
+            <h3 style={{ margin: 0, color: 'var(--text)' }}>Security</h3>
+            <p style={{ margin: '0.5rem 0 1.25rem', color: 'var(--muted)' }}>Update your password securely.</p>
+          </div>
+        </div>
+
+        {passwordError && (
+          <div style={{ marginBottom: '1rem', color: '#b91c1c', background: 'rgba(248, 113, 113, 0.12)', padding: '0.85rem 1rem', borderRadius: '8px' }}>
+            {passwordError}
+          </div>
+        )}
+
+        {passwordSuccess && (
+          <div style={{ marginBottom: '1rem', color: '#064e3b', background: 'rgba(22, 163, 74, 0.12)', padding: '0.85rem 1rem', borderRadius: '8px' }}>
+            {passwordSuccess}
+          </div>
+        )}
+
+        <form onSubmit={handleChangePassword} style={{ display: 'grid', gap: '1rem' }}>
+          <label style={{ display: 'grid', gap: '0.4rem', color: 'var(--text)' }}>
+            Current Password
+            <input
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              style={{ width: '100%', padding: '0.9rem 1rem', borderRadius: '8px', border: '1px solid var(--muted)', background: 'var(--panel)', color: 'var(--text)' }}
+            />
+          </label>
+
+          <label style={{ display: 'grid', gap: '0.4rem', color: 'var(--text)' }}>
+            New Password
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              style={{ width: '100%', padding: '0.9rem 1rem', borderRadius: '8px', border: '1px solid var(--muted)', background: 'var(--panel)', color: 'var(--text)' }}
+            />
+          </label>
+
+          <label style={{ display: 'grid', gap: '0.4rem', color: 'var(--text)' }}>
+            Confirm New Password
+            <input
+              type="password"
+              value={confirmNewPassword}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+              style={{ width: '100%', padding: '0.9rem 1rem', borderRadius: '8px', border: '1px solid var(--muted)', background: 'var(--panel)', color: 'var(--text)' }}
+            />
+          </label>
+
+          <button
+            type="submit"
+            disabled={passwordLoading}
+            style={{
+              alignSelf: 'flex-start',
+              background: 'var(--accent)',
+              color: '#fff',
+              border: 'none',
+              padding: '0.95rem 1.25rem',
+              borderRadius: '8px',
+              cursor: passwordLoading ? 'wait' : 'pointer',
+              fontWeight: '700'
+            }}
+          >
+            {passwordLoading ? 'Saving...' : 'Change Password'}
+          </button>
+        </form>
       </div>
 
       <hr className="divider" />
