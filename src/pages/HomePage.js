@@ -50,6 +50,7 @@ const HomePage = () => {
   const [typedText, setTypedText] = useState('');
   const [posts, setPosts] = useState([]);
   const [expandedComments, setExpandedComments] = useState({}); // ⬅️ NEW: Tracks hidden/shown comments
+  const [showFeaturesModal, setShowFeaturesModal] = useState(false);
   const { user } = useAuth();
   const fullText = "HI THERE! I'M A STUDENT WEB DEVELOPER.";
 
@@ -114,6 +115,13 @@ const HomePage = () => {
           <Link to="/about"><button>Learn More About Me</button></Link>
           {!user && <Link to="/register"><button className="mr-1">Sign Up Now</button></Link>}
           {user && <Link to="/create-post"><button className="mr-1">Write a Post</button></Link>}
+
+          <div className="hero-feature-cta">
+            <button type="button" className="feature-button" onClick={() => setShowFeaturesModal(true)}>
+              ✨ Explore Platform Features
+            </button>
+            <span className="feature-pointer" aria-hidden="true">↓</span>
+          </div>
         </div>
         <div className="hero-right">
           <div className="profile-circle">
@@ -121,6 +129,35 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+      {showFeaturesModal && (
+        <div className="features-backdrop" onClick={() => setShowFeaturesModal(false)}>
+          <div className="features-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="features-close" onClick={() => setShowFeaturesModal(false)}>&times;</button>
+            <div className="features-grid">
+              <div>
+                <h2>🎨 Frontend & Visual UX</h2>
+                <ul>
+                  <li><strong>Dynamic 2D Theme Engine:</strong> Seamless switching between Light/Dark modes and 7 custom accent colors with persistent local storage.</li>
+                  <li><strong>AI "Magic Polish":</strong> Integrated Google Gemini 1.5 Flash API for one-click post enhancement.</li>
+                  <li><strong>Interactive UI:</strong> Smooth particle backgrounds and relative "time ago" real-time timestamps.</li>
+                  <li><strong>Social Interactions:</strong> Dynamic "Author" badges in the comments section for easy tracking.</li>
+                </ul>
+              </div>
+              <div>
+                <h2>⚙️ Backend & Security</h2>
+                <ul>
+                  <li><strong>Advanced Authentication:</strong> Secure JWT sessions combined with robust OTP email verification for new accounts.</li>
+                  <li><strong>Cloud Architecture:</strong> Decoupled deployment (Vercel + Render) paired with MongoDB Atlas.</li>
+                  <li><strong>Media Engine:</strong> Direct integration with Cloudinary for permanent, optimized profile picture and cover image hosting.</li>
+                  <li><strong>Admin "God Mode":</strong> Role-based access control allowing admins to view live user stats and moderate the global feed.</li>
+                  <li><strong>Smart Rate Limiting:</strong> Backend logic preventing API abuse (e.g., 24-hour profile picture update limits).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <hr className="container divider" />
 

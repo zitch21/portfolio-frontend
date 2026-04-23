@@ -616,3 +616,122 @@ body.dark-mode .map-placeholder {
     opacity: 0; /* Fade out as they leave the top */
   }
 }
+
+.hero-feature-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+.feature-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.95rem 1.4rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.feature-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.18);
+}
+.feature-pointer {
+  font-size: 1.5rem;
+  color: var(--color-accent);
+  animation: floatBounce 1.2s ease-in-out infinite;
+}
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.9; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+.features-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+  padding: 1.5rem;
+}
+.features-modal {
+  position: relative;
+  width: min(920px, 100%);
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  background: var(--bg-secondary);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 35px 75px rgba(0, 0, 0, 0.35);
+}
+.features-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.92);
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.features-grid h2 {
+  color: var(--accent);
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+}
+.features-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+.features-grid li {
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--text-main);
+  line-height: 1.65;
+}
+.features-grid li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
+  color: var(--color-accent);
+  font-size: 1.25rem;
+}
+.features-modal p,
+.features-modal li {
+  color: var(--text-muted);
+}
+.features-modal strong {
+  color: var(--text-main);
+}
+@media (max-width: 860px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
