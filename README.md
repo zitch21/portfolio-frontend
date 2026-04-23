@@ -19,11 +19,13 @@ A production-ready, full-stack web application built to showcase modern developm
 * **JWT & OTP:** Secure user sessions using JSON Web Tokens, coupled with One-Time Password (OTP) email verification for account creation.
 * **Role-Based Access Control (RBAC):** Distinct `member` and `admin` roles dictating permissions across the application.
 * **Rate Limiting:** Backend logic preventing API abuse (e.g., users are limited to changing their profile picture once every 24 hours).
+* **Dynamic Profiles:** Users can write custom bios and manage their saved content directly from their profile dashboard.
 
 ### Content & Social Engine
 * **Global Feed:** Real-time aggregation of user posts with category tagging (Project, Learning, Update).
 * **Dynamic Media:** Seamless image uploads processed and hosted via Cloudinary.
 * **Micro-interactions:** Author badges in comments, dynamic "time ago" timestamps, and post reactions.
+* **Interactive Social Mechanics:** Users can Like posts and Bookmark them to a private 'Saved Posts' tab.
 
 ### 🤖 The "Magic Polish" AI
 Integrated a custom writing assistant powered by the Gemini API. Users can draft raw thoughts, click a button, and the backend proxies a request to instantly rewrite the text into professional, engaging copy.

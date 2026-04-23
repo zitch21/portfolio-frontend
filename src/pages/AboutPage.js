@@ -4,46 +4,6 @@ import DebugDefender from '../components/DebugDefender';
 const AboutPage = () => {
   return (
     <main style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-      <section style={{ marginBottom: '3rem' }}>
-        <h2>About the Platform</h2>
-        <p style={{ maxWidth: '760px', lineHeight: '1.8', color: 'var(--muted)', margin: '0 auto' }}>
-          This platform is designed to highlight modern full-stack web development in action. It blends polished visuals with real interaction, secure authentication, and a powerful AI writing assistant so users can explore, publish, and engage with confidence.
-        </p>
-
-        <div style={{ display: 'grid', gap: '1.5rem', marginTop: '2rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
-          <div style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--muted)' }}>
-            <h3>AI "Magic Polish"</h3>
-            <p style={{ color: 'var(--muted)' }}>Powered by Gemini 1.5 Flash for one-click post enhancement.</p>
-          </div>
-          <div style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--muted)' }}>
-            <h3>Production-Grade Architecture</h3>
-            <p style={{ color: 'var(--muted)' }}>Deployed on Vercel and Render with MongoDB Atlas and Cloudinary media hosting.</p>
-          </div>
-          <div style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--muted)' }}>
-            <h3>Advanced Authentication</h3>
-            <p style={{ color: 'var(--muted)' }}>Secure JWT sessions with OTP email verification.</p>
-          </div>
-          <div style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--muted)' }}>
-            <h3>Admin Moderation & Logic</h3>
-            <p style={{ color: 'var(--muted)' }}>Custom role-based access control, live user statistics, and profile picture rate-limiting.</p>
-          </div>
-          <div style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--muted)' }}>
-            <h3>Dynamic 2D Theme Engine</h3>
-            <p style={{ color: 'var(--muted)' }}>Seamlessly toggle between Light/Dark modes and 7 custom accent colors with persistent local storage.</p>
-          </div>
-        </div>
-      </section>
-
-      <section style={{ marginBottom: '3rem' }}>
-        <h2>Mini-Project: Debug Defender</h2>
-        <p style={{ maxWidth: '760px', lineHeight: '1.75', color: 'var(--muted)', margin: '0 auto' }}>
-          DebugDefender is an interactive project built with HTML5 Canvas and JavaScript, showing how I structure reusable components and practice game logic alongside the main portfolio.
-        </p>
-        <div style={{ marginTop: '1.5rem' }}>
-          <DebugDefender />
-        </div>
-      </section>
-
       <section>
         <h2>About Me & My Topic</h2>
         
@@ -74,6 +34,16 @@ const AboutPage = () => {
             </ol>
           </div>
         </div>
+
+        <section style={{ marginBottom: '3rem' }}>
+          <h2>Mini-Project: Debug Defender</h2>
+          <p style={{ maxWidth: '760px', lineHeight: '1.75', color: 'var(--muted)', margin: '0 auto' }}>
+            DebugDefender is an interactive project built with HTML5 Canvas and JavaScript, showing how I structure reusable components and practice game logic alongside the main portfolio.
+          </p>
+          <div style={{ marginTop: '1.5rem' }}>
+            <DebugDefender />
+          </div>
+        </section>
 
         <div className="mt-2">
           <img src="/assets/codingproject.jpg" alt="Screenshot of HTML/CSS code and layout" className="img-cover" />

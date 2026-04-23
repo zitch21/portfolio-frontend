@@ -20,6 +20,12 @@ const timeAgo = (date) => {
   return `${days} day${days > 1 ? 's' : ''} ago`;
 };
 
+// ─── HELPER FUNCTION FOR DOWNLOAD URL ───
+const getDownloadUrl = (cloudinaryUrl) => {
+  if (!cloudinaryUrl) return '';
+  return cloudinaryUrl.replace('/upload/', '/upload/fl_attachment/');
+};
+
 // ─── REUSABLE SCROLL REVEAL COMPONENT ───
 const FadeInSection = ({ children }) => {
   const [isVisible, setVisible] = useState(false);
@@ -134,7 +140,10 @@ const HomePage = () => {
         <div className="features-backdrop" onClick={() => setShowFeaturesModal(false)}>
           <div className="features-modal" onClick={(e) => e.stopPropagation()}>
             <button className="features-close" onClick={() => setShowFeaturesModal(false)}>&times;</button>
-            <div className="features-grid">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+              <span style={{ fontSize: '1.5rem' }}>✨</span>
+              <h2 style={{ margin: 0, color: 'var(--text)' }}>Explore Platform Features</h2>
+            </div>
               <div>
                 <h2>🎨 Frontend & Visual UX</h2>
                 <ul>
@@ -142,6 +151,7 @@ const HomePage = () => {
                   <li><strong>AI "Magic Polish":</strong> Integrated Google Gemini 1.5 Flash API for one-click post enhancement.</li>
                   <li><strong>Interactive UI:</strong> Smooth particle backgrounds and relative "time ago" real-time timestamps.</li>
                   <li><strong>Social Interactions:</strong> Dynamic "Author" badges in the comments section for easy tracking.</li>
+                  <li><strong>Social Mechanics:</strong> Interactive Like (Heart) and Bookmark saving functionality on all posts.</li>
                 </ul>
               </div>
               <div>
@@ -152,6 +162,7 @@ const HomePage = () => {
                   <li><strong>Media Engine:</strong> Direct integration with Cloudinary for permanent, optimized profile picture and cover image hosting.</li>
                   <li><strong>Admin "God Mode":</strong> Role-based access control allowing admins to view live user stats and moderate the global feed.</li>
                   <li><strong>Smart Rate Limiting:</strong> Backend logic preventing API abuse (e.g., 24-hour profile picture update limits).</li>
+                  <li><strong>Profile Mastery:</strong> Custom user bios and protected backend routes for querying user-specific saved post arrays.</li>
                 </ul>
               </div>
             </div>
@@ -207,19 +218,43 @@ const HomePage = () => {
 
                     {/* Image Render (If one exists) */}
                     {post.coverImage && (
-                      <img 
-                        src={post.coverImage} 
-                        alt="Post cover" 
-                        loading="lazy" 
-                        style={{ 
-                          width: '100%', 
-                          maxHeight: '500px', 
-                          objectFit: 'contain', 
-                          backgroundColor: 'rgba(0,0,0,0.2)', 
-                          borderRadius: '8px', 
-                          marginTop: '1rem' 
-                        }} 
-                      />
+                      <div style={{ position: 'relative', marginTop: '1rem' }}>
+                        <img 
+                          src={post.coverImage} 
+                          alt="Post cover" 
+                          loading="lazy" 
+                          style={{ 
+                            width: '100%', 
+                            maxHeight: '500px', 
+                            objectFit: 'contain', 
+                            backgroundColor: 'rgba(0,0,0,0.2)', 
+                            borderRadius: '8px'
+                          }} 
+                        />
+                        <a 
+                          href={getDownloadUrl(post.coverImage)} 
+                          download 
+                          style={{ 
+                            position: 'absolute', 
+                            top: '10px', 
+                            right: '10px', 
+                            background: 'rgba(0,0,0,0.7)', 
+                            color: '#fff', 
+                            border: 'none', 
+                            borderRadius: '50%', 
+                            width: '40px', 
+                            height: '40px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            cursor: 'pointer', 
+                            textDecoration: 'none' 
+                          }}
+                          title="Download Image"
+                        >
+                          ⬇️
+                        </a>
+                      </div>
                     )}
                     
                     {/* Interactive Buttons (Like & Comment Toggle) */}
