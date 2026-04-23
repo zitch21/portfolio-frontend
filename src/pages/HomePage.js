@@ -146,7 +146,7 @@ const HomePage = () => {
         </div>
         <div className="hero-right">
           <div className="profile-circle">
-            <img src="/assets/me.webp" alt="Profile placeholder" />
+            <img src="/assets/meinanime.png" alt="Profile placeholder" />
           </div>
         </div>
       </section>

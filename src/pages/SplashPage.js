@@ -52,7 +52,7 @@ const SplashPage = () => {
       <div className="accent-bg" aria-hidden="true"></div>
       <div className={`loader-container ${isFadingOut ? 'fade-out' : 'fade-in'}`} role="status" aria-live="polite">
         <div className="splash-logo">
-          <img src="/assets/me.webp" alt="Profile" />
+          <img src="/assets/meinanime.png" alt="Profile" />
         </div>
         <h1><span>{text}</span></h1>
         <div className="spinner"></div>

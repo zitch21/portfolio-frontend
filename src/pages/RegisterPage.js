@@ -67,7 +67,7 @@ const RegisterPage = () => {
         <div>
           <h2>Join the Community</h2>
           <p>Register to create your own profile, publish posts, and interact with others.</p>
-          <img src="/assets/coding.webp" alt="Decorative technology" className="img-cover mt-2" style={{ borderRadius: '8px' }} />
+          <img src="/assets/codinginschool.png" alt="Decorative technology" className="img-cover mt-2" style={{ borderRadius: '8px' }} />
         </div>
 
         <form onSubmit={handleSubmit} style={{ background: 'var(--bg)', padding: '2rem', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>

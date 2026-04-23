@@ -39,7 +39,7 @@ const LoginPage = () => {
         <div>
           <h2>Welcome Back</h2>
           <p>Sign in to access your dashboard, create posts, and interact with the community.</p>
-          <img src="/assets/coding.webp" alt="Coding" className="img-cover mt-2" style={{ borderRadius: '8px' }} />
+          <img src="/assets/codinginschool.png" alt="Coding" className="img-cover mt-2" style={{ borderRadius: '8px' }} />
         </div>
 
         <form onSubmit={handleSubmit} style={{ background: 'var(--bg)', padding: '2rem', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
