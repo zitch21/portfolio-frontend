@@ -18,7 +18,7 @@ const AboutPage = () => {
             </blockquote>
           </div>
           <div className="flex-1">
-            <img src="/assets/project.jpg" alt="Developer working on a laptop" />
+            <img src="/assets/ongoingproject.png" alt="Developer working on a laptop" />
           </div>
         </div>
 
@@ -46,7 +46,7 @@ const AboutPage = () => {
         </section>
 
         <div className="mt-2">
-          <img src="/assets/codingproject.jpg" alt="Screenshot of HTML/CSS code and layout" className="img-cover" />
+          <img src="/assets/codinginschool.png" alt="Screenshot of HTML/CSS code and layout" className="img-cover" />
         </div>
         <h3>How I Learn</h3>
         <p>I learn by following tutorials, reading class materials, and trying to replicate simple website layouts. I use resources like W3Schools to look up tags I don't remember.</p>
