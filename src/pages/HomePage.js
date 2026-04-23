@@ -108,13 +108,11 @@ const HomePage = () => {
       return;
     }
     try {
-      await API.put(`/posts/${postId}/bookmark`);
-      // Note: We don't update local state here as bookmarks are user-specific
-      // The bookmark status would need to be fetched separately or stored locally
-      alert("Post bookmarked successfully!");
+      const { data } = await API.put(`/posts/${postId}/bookmark`);
+      alert(data.message);
     } catch (err) {
-      console.error("Failed to bookmark post");
-      alert("Failed to bookmark post");
+      console.error("Failed to bookmark post:", err);
+      alert(err.response?.data?.message || "Failed to bookmark post");
     }
   };
 
