@@ -140,10 +140,11 @@ const HomePage = () => {
         <div className="features-backdrop" onClick={() => setShowFeaturesModal(false)}>
           <div className="features-modal" onClick={(e) => e.stopPropagation()}>
             <button className="features-close" onClick={() => setShowFeaturesModal(false)}>&times;</button>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
               <span style={{ fontSize: '1.5rem' }}>✨</span>
               <h2 style={{ margin: 0, color: 'var(--text)' }}>Explore Platform Features</h2>
             </div>
+            <div className="features-grid">
               <div>
                 <h2>🎨 Frontend & Visual UX</h2>
                 <ul>

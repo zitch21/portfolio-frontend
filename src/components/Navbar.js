@@ -10,6 +10,7 @@ const Navbar = () => {
   const { user, logout } = useAuth();
   const { themeMode, themeAccent, toggleThemeMode, setAccentColor } = useTheme();
   const [showAccentPicker, setShowAccentPicker] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const accentColors = ['red', 'green', 'blue', 'purple', 'yellow', 'orange', 'monochrome'];
   const accentColorMap = {
@@ -33,34 +34,43 @@ const Navbar = () => {
   return (
     <header className="site-header">
       <nav className="nav container">
-        <div className="logo"><strong>EJPB</strong></div>
-        <ul className="nav-right">
-          <li>
-            <button
-              onClick={toggleThemeMode}
-              style={{
-                background: 'var(--bg-secondary)',
-                border: '1px solid var(--text-muted)',
-                color: 'var(--text-main)',
-                cursor: 'pointer',
-                fontSize: '0.9rem',
-                padding: '6px 14px',
-                borderRadius: '20px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                fontWeight: 'bold',
-                transition: 'all 0.25s ease'
-              }}
-              onMouseOver={(e) => (e.currentTarget.style.borderColor = 'var(--color-accent)')}
-              onMouseOut={(e) => (e.currentTarget.style.borderColor = 'var(--text-muted)')}
-              title="Toggle light/dark mode"
-            >
-              {themeMode === 'dark' ? '☀️' : '🌙'}
-            </button>
-          </li>
+        <div className="nav-left">
+          <div className="logo"><strong>EJPB</strong></div>
+          <button
+            className="mobile-menu-toggle"
+            type="button"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+          >
+            {mobileMenuOpen ? '✕' : '☰'}
+          </button>
+        </div>
 
-          <li style={{ position: 'relative' }}>
+        <div className="nav-actions">
+          <button
+            onClick={toggleThemeMode}
+            style={{
+              background: 'var(--bg-secondary)',
+              border: '1px solid var(--text-muted)',
+              color: 'var(--text-main)',
+              cursor: 'pointer',
+              fontSize: '0.9rem',
+              padding: '6px 14px',
+              borderRadius: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontWeight: 'bold',
+              transition: 'all 0.25s ease'
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.borderColor = 'var(--color-accent)')}
+            onMouseOut={(e) => (e.currentTarget.style.borderColor = 'var(--text-muted)')}
+            title="Toggle light/dark mode"
+          >
+            {themeMode === 'dark' ? '☀️' : '🌙'}
+          </button>
+
+          <div className="accent-picker-wrapper">
             <button
               onClick={() => setShowAccentPicker(!showAccentPicker)}
               style={{
@@ -124,22 +134,24 @@ const Navbar = () => {
                 ))}
               </div>
             )}
-          </li>
+          </div>
+        </div>
 
+        <ul className={`nav-right ${mobileMenuOpen ? 'mobile-open' : ''}`}>
           <li>
-            <Link to="/home" className={`nav-link ${location.pathname === '/home' ? 'active' : ''}`}>
+            <Link to="/home" className={`nav-link ${location.pathname === '/home' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>
               HOME
             </Link>
           </li>
           <li>
-            <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>
+            <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>
               ABOUT
             </Link>
           </li>
 
           {(!user || user.role !== 'admin') && (
             <li>
-              <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>
+              <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>
                 CONTACT
               </Link>
             </li>
@@ -148,12 +160,12 @@ const Navbar = () => {
           {!user && (
             <>
               <li>
-                <Link to="/login" className={`nav-link ${location.pathname === '/login' ? 'active' : ''}`}>
+                <Link to="/login" className={`nav-link ${location.pathname === '/login' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>
                   LOGIN
                 </Link>
               </li>
               <li>
-                <Link to="/register" className={`nav-link ${location.pathname === '/register' ? 'active' : ''}`}>
+                <Link to="/register" className={`nav-link ${location.pathname === '/register' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>
                   REGISTER
                 </Link>
               </li>
@@ -163,12 +175,12 @@ const Navbar = () => {
           {user && (
             <>
               <li>
-                <Link to="/profile" className={`nav-link ${location.pathname === '/profile' ? 'active' : ''}`}>
+                <Link to="/profile" className={`nav-link ${location.pathname === '/profile' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>
                   PROFILE
                 </Link>
               </li>
               <li>
-                <Link to="/create-post" className={`nav-link ${location.pathname === '/create-post' ? 'active' : ''}`}>
+                <Link to="/create-post" className={`nav-link ${location.pathname === '/create-post' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>
                   WRITE
                 </Link>
               </li>
@@ -177,7 +189,7 @@ const Navbar = () => {
 
           {user && user.role === 'admin' && (
             <li>
-              <Link to="/admin" className={`nav-link ${location.pathname === '/admin' ? 'active' : ''}`}>
+              <Link to="/admin" className={`nav-link ${location.pathname === '/admin' ? 'active' : ''}`} onClick={() => setMobileMenuOpen(false)}>
                 DASHBOARD
               </Link>
             </li>
@@ -186,7 +198,10 @@ const Navbar = () => {
           {user && (
             <li>
               <button
-                onClick={handleLogout}
+                onClick={() => {
+                  handleLogout();
+                  setMobileMenuOpen(false);
+                }}
                 style={{
                   background: 'transparent',
                   color: 'var(--color-accent)',

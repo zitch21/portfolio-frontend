@@ -135,7 +135,7 @@ const ProfilePage = () => {
     <main className="container" style={{ marginTop: '2rem' }}>
       
       {/* ─── USER STATS HEADER ─── */}
-      <div style={{ background: 'var(--bg)', padding: '2rem', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '2rem', border: '1px solid var(--muted)' }}>
+      <div className="profile-header" style={{ background: 'var(--bg)', padding: '2rem', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '2rem', border: '1px solid var(--muted)' }}>
         
         {/* Profile Picture Area */}
         <div style={{ position: 'relative', width: '120px', height: '120px' }}>
@@ -183,7 +183,7 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      <div style={{ background: 'var(--bg)', padding: '1.75rem', borderRadius: '12px', border: '1px solid var(--muted)', marginTop: '2rem' }}>
+      <div className="profile-security-card" style={{ background: 'var(--bg)', padding: '1.75rem', borderRadius: '12px', border: '1px solid var(--muted)', marginTop: '2rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap' }}>
           <div>
             <h3 style={{ margin: 0, color: 'var(--text)' }}>Security</h3>
