@@ -101,6 +101,23 @@ const HomePage = () => {
     }
   };
 
+  // Handle Bookmark Button Click
+  const handleBookmark = async (postId) => {
+    if (!user) {
+      alert("Please log in or register to bookmark posts!");
+      return;
+    }
+    try {
+      await API.put(`/posts/${postId}/bookmark`);
+      // Note: We don't update local state here as bookmarks are user-specific
+      // The bookmark status would need to be fetched separately or stored locally
+      alert("Post bookmarked successfully!");
+    } catch (err) {
+      console.error("Failed to bookmark post");
+      alert("Failed to bookmark post");
+    }
+  };
+
   // ⬅️ NEW: Toggle Comments Function
   const toggleComments = (postId) => {
     setExpandedComments(prev => ({
@@ -276,6 +293,24 @@ const HomePage = () => {
                       >
                         <span style={{ fontSize: '1.2rem' }}>{hasLiked ? '❤️' : '🤍'}</span> 
                         {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
+                      </button>
+
+                      <button 
+                        onClick={() => handleBookmark(post._id)}
+                        style={{
+                          background: 'none', 
+                          border: 'none', 
+                          cursor: 'pointer', 
+                          fontSize: '1rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          color: 'var(--muted)'
+                        }}
+                        title="Save post for later"
+                      >
+                        <span style={{ fontSize: '1.2rem' }}>🔖</span> 
+                        Save
                       </button>
 
                       {/* ⬅️ NEW: Toggle button to show/hide the CommentSection */}

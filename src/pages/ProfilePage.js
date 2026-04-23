@@ -15,6 +15,10 @@ const ProfilePage = () => {
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [passwordError, setPasswordError] = useState('');
   const [passwordSuccess, setPasswordSuccess] = useState('');
+  const [bio, setBio] = useState('');
+  const [bioLoading, setBioLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('posts'); // 'posts' or 'saved'
+  const [savedPosts, setSavedPosts] = useState([]);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -39,8 +43,17 @@ const ProfilePage = () => {
           followers: profileData.user?.followers?.length || 0,
           following: profileData.user?.following?.length || 0
         });
+        setBio(profileData.user?.bio || '');
       } catch (err) {
         console.error("Failed to fetch user stats:", err);
+      }
+
+      // ─── INDEPENDENT BLOCK 3: Fetch Saved Posts ───
+      try {
+        const { data: savedPostsData } = await API.get('/users/saved-posts');
+        setSavedPosts(savedPostsData);
+      } catch (err) {
+        console.error("Failed to fetch saved posts:", err);
       }
 
       setLoading(false);
@@ -123,6 +136,19 @@ const ProfilePage = () => {
       setPasswordError(err.response?.data?.message || 'Failed to update password.');
     } finally {
       setPasswordLoading(false);
+    }
+  };
+
+  const handleBioUpdate = async (e) => {
+    e.preventDefault();
+    setBioLoading(true);
+    try {
+      const { data } = await API.put('/users/bio', { bio });
+      alert(data.message);
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to update bio');
+    } finally {
+      setBioLoading(false);
     }
   };
 
@@ -253,52 +279,184 @@ const ProfilePage = () => {
         </form>
       </div>
 
+      <div className="profile-bio-card" style={{ background: 'var(--bg)', padding: '1.75rem', borderRadius: '12px', border: '1px solid var(--muted)', marginTop: '2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap' }}>
+          <div>
+            <h3 style={{ margin: 0, color: 'var(--text)' }}>About Me</h3>
+            <p style={{ margin: '0.5rem 0 1.25rem', color: 'var(--muted)' }}>Tell others about yourself. Max 500 characters.</p>
+          </div>
+        </div>
+
+        <form onSubmit={handleBioUpdate} style={{ display: 'grid', gap: '1rem' }}>
+          <label style={{ display: 'grid', gap: '0.4rem', color: 'var(--text)' }}>
+            Bio
+            <textarea
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              placeholder="Write something about yourself..."
+              maxLength={500}
+              style={{ 
+                width: '100%', 
+                padding: '0.9rem 1rem', 
+                borderRadius: '8px', 
+                border: '1px solid var(--muted)', 
+                background: 'var(--panel)', 
+                color: 'var(--text)',
+                resize: 'vertical',
+                minHeight: '100px',
+                fontFamily: 'inherit'
+              }}
+            />
+            <small style={{ color: 'var(--muted)', textAlign: 'right' }}>{bio.length}/500</small>
+          </label>
+
+          <button
+            type="submit"
+            disabled={bioLoading}
+            style={{
+              alignSelf: 'flex-start',
+              background: 'var(--accent)',
+              color: '#fff',
+              border: 'none',
+              padding: '0.95rem 1.25rem',
+              borderRadius: '8px',
+              cursor: bioLoading ? 'wait' : 'pointer',
+              fontWeight: '700'
+            }}
+          >
+            {bioLoading ? 'Saving...' : 'Update Bio'}
+          </button>
+        </form>
+      </div>
+
       <hr className="divider" />
 
-      {/* ─── MY POSTS FEED ─── */}
-      <h3 style={{ color: 'var(--text)' }}>My Published Posts</h3>
-      
-      {loading ? (
-        <p style={{ color: 'var(--muted)' }}>Loading your content...</p>
-      ) : myPosts.length === 0 ? (
-        <p style={{ color: 'var(--muted)' }}>You haven't written any posts yet. Head over to the Write tab to get started!</p>
-      ) : (
-        <div style={{ display: 'grid', gap: '1.5rem' }}>
-          {myPosts.map(post => (
-            <div key={post._id} style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--muted)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div>
-                  <h4 style={{ margin: 0, color: 'var(--accent)' }}>{post.title}</h4>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{new Date(post.createdAt).toLocaleDateString()}</span>
-                </div>
-                
-                <button 
-                  onClick={() => handleDelete(post._id)}
-                  style={{ background: '#fee2e2', color: '#991b1b', border: 'none', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
-                >
-                  Delete
-                </button>
-              </div>
-              <p style={{ marginTop: '1rem', color: 'var(--text)' }}>{post.content}</p>
-
-              {post.coverImage && (
-                <img 
-                    src={post.coverImage} 
-                    alt="Post cover" 
-                    loading="lazy" 
-                    style={{ 
-                      width: '100%', 
-                      maxHeight: '500px', 
-                      objectFit: 'contain', 
-                      backgroundColor: 'rgba(0,0,0,0.2)', 
-                      borderRadius: '8px', 
-                      marginTop: '1rem' 
-                    }} 
-                  />
-              )}
-            </div>
-          ))}
+      {/* ─── TABS NAVIGATION ─── */}
+      <div style={{ marginBottom: '2rem' }}>
+        <div style={{ display: 'flex', gap: '0', borderBottom: '1px solid var(--muted)' }}>
+          <button
+            onClick={() => setActiveTab('posts')}
+            style={{
+              padding: '1rem 2rem',
+              background: activeTab === 'posts' ? 'var(--accent)' : 'transparent',
+              color: activeTab === 'posts' ? '#fff' : 'var(--text)',
+              border: 'none',
+              borderRadius: '8px 8px 0 0',
+              cursor: 'pointer',
+              fontWeight: '600',
+              transition: 'all 0.2s'
+            }}
+          >
+            My Posts ({myPosts.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('saved')}
+            style={{
+              padding: '1rem 2rem',
+              background: activeTab === 'saved' ? 'var(--accent)' : 'transparent',
+              color: activeTab === 'saved' ? '#fff' : 'var(--text)',
+              border: 'none',
+              borderRadius: '8px 8px 0 0',
+              cursor: 'pointer',
+              fontWeight: '600',
+              transition: 'all 0.2s'
+            }}
+          >
+            Saved Posts ({savedPosts.length})
+          </button>
         </div>
+      </div>
+
+      {/* ─── TAB CONTENT ─── */}
+      {activeTab === 'posts' ? (
+        <>
+          <h3 style={{ color: 'var(--text)' }}>My Published Posts</h3>
+          
+          {loading ? (
+            <p style={{ color: 'var(--muted)' }}>Loading your content...</p>
+          ) : myPosts.length === 0 ? (
+            <p style={{ color: 'var(--muted)' }}>You haven't written any posts yet. Head over to the Write tab to get started!</p>
+          ) : (
+            <div style={{ display: 'grid', gap: '1.5rem' }}>
+              {myPosts.map(post => (
+                <div key={post._id} style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--muted)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <h4 style={{ margin: 0, color: 'var(--accent)' }}>{post.title}</h4>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{new Date(post.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    
+                    <button 
+                      onClick={() => handleDelete(post._id)}
+                      style={{ background: '#fee2e2', color: '#991b1b', border: 'none', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                  <p style={{ marginTop: '1rem', color: 'var(--text)' }}>{post.content}</p>
+
+                  {post.coverImage && (
+                    <img 
+                        src={post.coverImage} 
+                        alt="Post cover" 
+                        loading="lazy" 
+                        style={{ 
+                          width: '100%', 
+                          maxHeight: '500px', 
+                          objectFit: 'contain', 
+                          backgroundColor: 'rgba(0,0,0,0.2)', 
+                          borderRadius: '8px', 
+                          marginTop: '1rem' 
+                        }} 
+                      />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
+        <>
+          <h3 style={{ color: 'var(--text)' }}>Saved Posts</h3>
+          
+          {loading ? (
+            <p style={{ color: 'var(--muted)' }}>Loading your saved posts...</p>
+          ) : savedPosts.length === 0 ? (
+            <p style={{ color: 'var(--muted)' }}>You haven't saved any posts yet. Browse posts and click the bookmark button to save them for later!</p>
+          ) : (
+            <div style={{ display: 'grid', gap: '1.5rem' }}>
+              {savedPosts.map(post => (
+                <div key={post._id} style={{ background: 'var(--bg)', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--muted)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <h4 style={{ margin: 0, color: 'var(--accent)' }}>{post.title}</h4>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>
+                        By {post.author?.name || 'Unknown'} • {new Date(post.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+                  <p style={{ marginTop: '1rem', color: 'var(--text)' }}>{post.content}</p>
+
+                  {post.coverImage && (
+                    <img 
+                        src={post.coverImage} 
+                        alt="Post cover" 
+                        loading="lazy" 
+                        style={{ 
+                          width: '100%', 
+                          maxHeight: '500px', 
+                          objectFit: 'contain', 
+                          backgroundColor: 'rgba(0,0,0,0.2)', 
+                          borderRadius: '8px', 
+                          marginTop: '1rem' 
+                        }} 
+                      />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </>
       )}
     </main>
   );

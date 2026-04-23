@@ -74,6 +74,21 @@ const PublicProfile = () => {
         <h1 style={{ color: 'var(--text)', marginBottom: '0.5rem' }}>{profileData.name}</h1>
         <p style={{ color: 'var(--muted)', marginBottom: '1.5rem' }}>{profileData.role === 'admin' ? '⭐ Admin' : 'Member'}</p>
         
+        {profileData.bio && (
+          <div style={{ 
+            background: 'var(--panel)', 
+            padding: '1rem', 
+            borderRadius: '8px', 
+            marginBottom: '1.5rem',
+            border: '1px solid var(--muted)',
+            textAlign: 'left'
+          }}>
+            <p style={{ color: 'var(--text)', margin: 0, whiteSpace: 'pre-wrap', lineHeight: '1.5' }}>
+              {profileData.bio}
+            </p>
+          </div>
+        )}
+        
         <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '1.5rem', color: 'var(--text)' }}>
           <div><strong>{profileData.followers.length}</strong> <span style={{ color: 'var(--muted)' }}>Followers</span></div>
           <div><strong>{profileData.following.length}</strong> <span style={{ color: 'var(--muted)' }}>Following</span></div>
