@@ -91,7 +91,7 @@ const RegisterPage = () => {
             <label htmlFor="email">Email</label>
             <input id="email" type="email" name="email" value={formData.email} onChange={handleChange} />
             {fieldErrors.email && <p style={{ color: '#dc2626', marginTop: '0.5rem', fontSize: '0.9rem' }}>{fieldErrors.email}</p>}
-            <p style={{ color: 'var(--muted)', fontSize: '0.85rem', marginTop: '0.5rem' }}>⚠️ Please use a valid, accessible email address to receive your One-Time Password (OTP).</p>
+            <p style={{ color: 'var(--muted)', fontSize: '0.85rem', marginTop: '0.5rem' }}>⚠️ You may use a test email to register, but without a real email address, you won't be able to receive OTPs if you ever need to reset your password. (Note: Passwords require at least one special character).</p>
           </div>
 
           <div className="form-group">
